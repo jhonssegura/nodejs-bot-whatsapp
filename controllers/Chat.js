@@ -6,11 +6,13 @@ const start = (client) => {
   
   client_global = client;
   client.onMessage( async (message) => {
+    console.log("mensaje que llega", message.body);
 
-    //integracion
+    //integracion conexion API
     if (message.body === 'hola' || message.body === 'Hola') {
       console.log()
       sendText( client, message.from ) //respuestas
+      // axios.post("/url", token, authentication)
     }
     
     // if (message.body === 'Ubicacion' || message.body === 'ubicacion') {
@@ -48,7 +50,7 @@ const sendText = async (client, from, text='desde el bot') => {
   console.log('enviando mensaje', from);
   
   await client
-    .sendText(from, `👋 Bienvenido! ${text} `)
+    .sendText(from, `🤖 ${text} `)
     .then((result) => {
       console.log('Result: ', result); //return object success
     })
