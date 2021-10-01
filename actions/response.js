@@ -1,3 +1,20 @@
+// send text
+const sendText = async (client, from, text='desde el bot') => {
+  console.log('enviando client', client);
+  console.log('enviando mensaje', from);
+  
+  await client
+    .sendText(from, `👋 Bienvenido! ${text} `)
+    .then((result) => {
+      console.log('Result: ', result); //return object success
+    })
+    
+    .catch((err) => {
+      console.error('Error when sending: ', err); //return object error
+    });    
+}
+
+
 
 // send Image
 const sendImage = async (client, message)  => {
@@ -40,18 +57,6 @@ const sendButtons = async (client, message) => {
     });
 }
 
-// send text
-const sendText = async (client, message) => {
-  await client
-    .sendText(message.from, '👋 Bienvenido!')
-    .then((result) => {
-      console.log('Result: ', result); //return object success
-    })
-    
-    .catch((erro) => {
-      console.error('Error when sending: ', erro); //return object error
-    });    
-}
 
 // send location
 const sendLocation = async (client, message) => {
