@@ -17,7 +17,6 @@ const sendImage = async (client, message)  => {
 
 }
 
-
 // send Buttons
 const sendButtons = async (client, message) => {
   const buttons = [
@@ -66,9 +65,81 @@ const sendLocation = async (client, message) => {
     });
 }
 
+// send file PDF
+const sendFilePDF = async (client, message) => {
+  await client
+    .sendFile(message.from, 'files/pdf/peru.pdf', 'peru.pdf', 'Himno')
+    .then((result) => {
+      console.log('Result: ', result); //return object success
+    })
+    .catch((erro) => {
+      console.error('Error when sending: ', erro); //return object error
+    });
+}
+
+// send contact - Por Revisar
+const sendContact = async (client, message) => {
+  await client
+  .sendContactVcard(message.from, '111111111111@c.us', 'Name of contact')
+  .then((result) => {
+    console.log('Result: ', result); //return object success
+  })
+  .catch((erro) => {
+    console.error('Error when sending: ', erro); //return object error
+  });
+}
+
+// Send a list of contact cards
+const sendContactList = async (client, message) => {
+  await client
+  .sendContactVcardList(message.from, [
+    '51916434356.us',
+    '51916434356.us',
+  ])
+  .then((result) => {
+    console.log('Result: ', result); //return object success
+  })
+  .catch((erro) => {
+    console.error('Error when sending: ', erro); //return object error
+  });
+}
+
+// Send audio file MP3
+const sendVoice = async (client, message) => {
+  await client
+  .sendVoice(message.from, 'files/mp3/interpol-song.mp3')
+  .then((result) => {
+    console.log('Result: ', result); //return object success
+  })
+  .catch((erro) => {
+    console.error('Error when sending: ', erro); //return object error
+  });
+}
+
+// Send video file MP4
+const sendVideo = async (client, message) => {
+  await client
+  .sendVideoAsGif(message.from,
+  'files/mp4/interpol-video.mp4',
+  'video.mp4',
+  'mp4 file'
+  )
+  .then((result) => {
+    console.log('Result: ', result); //return object success
+  })
+  .catch((erro) => {
+    console.error('Error when sending: ', erro); //return object error
+  });
+}
+
 module.exports = {
   sendImage,
   sendButtons,
   sendText,
-  sendLocation
+  sendLocation,
+  sendFilePDF,
+  sendContact,
+  sendContactList,
+  sendVoice,
+  sendVideo,
 }

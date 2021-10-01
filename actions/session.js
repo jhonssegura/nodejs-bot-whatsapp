@@ -4,7 +4,7 @@ const { start } = require('../actions/start');
 const sessions = async () => {
 
   //crear una lista de sessiones 
-  const marketingClient = await venom.create('marketing');
+  const marketingClient = await venom.create('keos');
   start(marketingClient);
 
   // const salesClient = await venom.create('sales');
