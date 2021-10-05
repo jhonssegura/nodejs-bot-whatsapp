@@ -12,7 +12,6 @@ const start = (client) => {
     if (message.body === 'hola' || message.body === 'Hola') {
       console.log()
       sendText( client, message.from ) //respuestas
-      // axios.post("/url", token, authentication)
     }
     
     // if (message.body === 'Ubicacion' || message.body === 'ubicacion') {
