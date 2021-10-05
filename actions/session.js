@@ -10,9 +10,9 @@ const sessions = async () => {
   const marketingClient = await venom.create('keos');
   start(marketingClient);
   
-  // console.log("segunda instancia");
-  // const salesClient = await venom.create('keos');
-  // start(salesClient)
+  console.log("segunda instancia");
+  const salesClient = await venom.create('keos');
+  start(salesClient)
 
   // const supportClient = await venom.create('rpa');
   // start(supportClient)
