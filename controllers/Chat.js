@@ -1,40 +1,41 @@
 const axios = require('axios');
-const { sendImage, sendText, sendFilePDF, sendVoice, sendVideo } = require('../actions/response');
+const { sendImage, sendText, sendFilePDF, sendVoice, sendVideo, sendLocation, sendContact, sendContactList } = require('../actions/response');
 var client_global;
 
 const start = (client) => {
   
   client_global = client;
-  client.onMessage( async (message) => {
-    console.log("cliente", client);
 
-    //integracion conexion API
-    if (message.body === 'hola' || message.body === 'Hola') {
-      console.log()
-      sendText( client, message.from ) //respuestas
+  client.onMessage( async (message) => {
+
+    // Validaciones respuestas cuando escriben al Bot
+
+    if (message.body === 'Hola' || message.body === 'hola') {
+      sendText( client, message.from ) 
     }
-    
-    // if (message.body === 'Ubicacion' || message.body === 'ubicacion') {
-    //   sendLocation( client, message ) //respuestas
-    // }
-    
-    // if (message.body === 'Opciones' || message.body === 'opciones') {
-    //   sendButtons( client, message ); //respuestas
-    // }
     if (message.body === 'Imagen' || message.body === 'imagen') {
-      sendImage( client, message.from ) //respuestas
+      sendImage( client, message.from ) 
+    }
+    if (message.body === 'PDF' || message.body === 'pdf') {
+      sendFilePDF( client, message.from );
+    }
+    if (message.body === 'Audio' || message.body === 'audio') {
+      sendVoice( client, message.from );
+    }
+    if (message.body === 'Video' || message.body === 'video') {
+      sendVideo( client, message.from );
     }
   });
 }
 
+// Funciones de envío desde el API a Venom
+
 const postReceiveMessage = async( req, res ) => {
-  console.log(req.body);
   return res.status(200).json(req.body)
 }
 
 const postSendMessage = async( req, res ) => {
 
-  console.log('en el controlador', client_global);
   const { from, text } = req.body;
   
   sendText(client_global, from, text);
@@ -45,7 +46,7 @@ const postSendMessage = async( req, res ) => {
 }
 
 const postSendImage = async( req, res ) => {
-  console.log("imagen del body", req.body)
+
   const { from, image } = req.body
 
   sendImage(client_global, from, image);
@@ -88,6 +89,39 @@ const postSendVideo = async( req, res ) => {
   })
 }
 
+const postSendLocation = async( req, res ) => {
+
+  const { from, latitude, longitude, country } = req.body;
+  
+  sendLocation(client_global, from, latitude, longitude, country);
+  return res.status(200).json({
+    status: "ok",
+    msg: "mensaje enviado"
+  })
+}
+
+const postSendContact = async( req, res ) => {
+
+  const { from, number, name } = req.body;
+  
+  sendContact(client_global, from, number, name);
+  return res.status(200).json({
+    status: "ok",
+    msg: "mensaje enviado"
+  })
+}
+
+const postSendContactList = async( req, res ) => {
+
+  const { from, number_1, number_2 } = req.body;
+  
+  sendContactList(client_global, from, number_1, number_2);
+  return res.status(200).json({
+    status: "ok",
+    msg: "mensaje enviado"
+  })
+}
+
 module.exports = {
   postReceiveMessage,
   postSendMessage,
@@ -95,5 +129,8 @@ module.exports = {
   postSendFilePDF,
   postSendVoice,
   postSendVideo,
+  postSendLocation,
+  postSendContact,
+  postSendContactList,
   start
 }

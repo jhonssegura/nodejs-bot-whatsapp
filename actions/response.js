@@ -18,6 +18,9 @@ const sendText = async (client, from, text='desde el bot') => {
 
 // send Image
 const sendImage = async (client, from, image)  => {
+  if (image == "") {
+    image = "images/response.jpg"
+  }
   await client
     .sendImage(
       from,
@@ -59,9 +62,9 @@ const sendButtons = async (client, message) => {
 
 
 // send location
-const sendLocation = async (client, message) => {
+const sendLocation = async (client, from, latitude, longitude, country) => {
   await client
-    .sendLocation(message.from, '-13.6561589', '-69.7309264', 'Brasil')
+    .sendLocation(from, latitude, longitude, country)
     .then((result) => {
       console.log('Result: ', result); //return object success
     })
@@ -83,9 +86,9 @@ const sendFilePDF = async (client, from, file) => {
 }
 
 // send contact - Por Revisar
-const sendContact = async (client, message) => {
+const sendContact = async (client, from, number, name) => {
   await client
-  .sendContactVcard(message.from, '111111111111@c.us', 'Name of contact')
+  .sendContactVcard(from, number, name)
   .then((result) => {
     console.log('Result: ', result); //return object success
   })
@@ -95,11 +98,11 @@ const sendContact = async (client, message) => {
 }
 
 // Send a list of contact cards
-const sendContactList = async (client, message) => {
+const sendContactList = async (client, from, number_1, number_2 ) => {
   await client
-  .sendContactVcardList(message.from, [
-    '51916434356.us',
-    '51916434356.us',
+  .sendContactVcardList(from, [
+    number_1,
+    number_2,
   ])
   .then((result) => {
     console.log('Result: ', result); //return object success
