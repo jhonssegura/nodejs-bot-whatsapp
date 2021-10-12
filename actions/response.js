@@ -17,16 +17,16 @@ const sendText = async (client, from, text='desde el bot') => {
 
 
 // send Image
-const sendImage = async (client, message)  => {
+const sendImage = async (client, from, image)  => {
   await client
     .sendImage(
-      message.from,
-      'images/response.jpg',
+      from,
+      image,
       'image-name',
       'Caption text'
     )
     .then((result) => {
-      console.log('Result: ', result); //return object success
+      console.log('Result: imagen enciaa', result); //return object success
     })
     .catch((erro) => {
       console.error('Error when sending: ', erro); //return object error
@@ -71,9 +71,9 @@ const sendLocation = async (client, message) => {
 }
 
 // send file PDF
-const sendFilePDF = async (client, message) => {
+const sendFilePDF = async (client, from, file) => {
   await client
-    .sendFile(message.from, 'files/pdf/peru.pdf', 'peru.pdf', 'Himno')
+    .sendFile(from, file, 'peru.pdf', 'Himno')
     .then((result) => {
       console.log('Result: ', result); //return object success
     })
@@ -110,9 +110,9 @@ const sendContactList = async (client, message) => {
 }
 
 // Send audio file MP3
-const sendVoice = async (client, message) => {
+const sendVoice = async (client, from, file) => {
   await client
-  .sendVoice(message.from, 'files/mp3/interpol-song.mp3')
+  .sendVoice(from, file)
   .then((result) => {
     console.log('Result: ', result); //return object success
   })

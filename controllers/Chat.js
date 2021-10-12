@@ -1,12 +1,12 @@
 const axios = require('axios');
-// const { sendImage, sendButtons, sendLocation, sendText } = require('../actions/response');
-var client_global  ;
+const { sendImage, sendText, sendFilePDF, sendVoice } = require('../actions/response');
+var client_global;
 
 const start = (client) => {
   
   client_global = client;
   client.onMessage( async (message) => {
-    console.log("mensaje que llega", message.body);
+    console.log("cliente", client);
 
     //integracion conexion API
     if (message.body === 'hola' || message.body === 'Hola') {
@@ -21,10 +21,15 @@ const start = (client) => {
     // if (message.body === 'Opciones' || message.body === 'opciones') {
     //   sendButtons( client, message ); //respuestas
     // }
-    // if (message.body === 'Imagen' || message.body === 'imagen') {
-    //   sendImage( client, message ) //respuestas
-    // }
+    if (message.body === 'Imagen' || message.body === 'imagen') {
+      sendImage( client, message.from ) //respuestas
+    }
   });
+}
+
+const postReceiveMessage = async( req, res ) => {
+  console.log(req.body);
+  return res.status(200).json(req.body)
 }
 
 const postSendMessage = async( req, res ) => {
@@ -39,29 +44,44 @@ const postSendMessage = async( req, res ) => {
   })
 }
 
-const postReceiveMessage = async( req, res ) => {
-  console.log(req.body);
-  return res.status(200).json(req.body)
+const postSendImage = async( req, res ) => {
+  console.log("imagen del body", req.body)
+  const { from, image } = req.body
+
+  sendImage(client_global, from, image);
+  return res.status(200).json({
+    status: "ok",
+    msg: "imagen enviada"
+  })
 }
 
-const sendText = async (client, from, text='desde el bot') => {
-  console.log('enviando client', client);
-  console.log('enviando mensaje', from);
+const postSendFilePDF = async( req, res ) => {
+
+  const { from, file } = req.body;
   
-  await client
-    .sendText(from, `🤖 ${text} `)
-    .then((result) => {
-      console.log('Result: ', result); //return object success
-    })
-    
-    .catch((err) => {
-      console.error('Error when sending: ', err); //return object error
-    });    
+  sendFilePDF(client_global, from, file);
+  return res.status(200).json({
+    status: "ok",
+    msg: "mensaje enviado"
+  })
 }
 
+const postSendVoice = async( req, res ) => {
+
+  const { from, file } = req.body;
+  
+  sendVoice(client_global, from, file);
+  return res.status(200).json({
+    status: "ok",
+    msg: "mensaje enviado"
+  })
+}
 
 module.exports = {
-  postSendMessage,
   postReceiveMessage,
+  postSendMessage,
+  postSendImage,
+  postSendFilePDF,
+  postSendVoice,
   start
 }
