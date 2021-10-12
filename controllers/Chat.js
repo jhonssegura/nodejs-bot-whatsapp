@@ -1,5 +1,5 @@
 const axios = require('axios');
-const { sendImage, sendText, sendFilePDF, sendVoice } = require('../actions/response');
+const { sendImage, sendText, sendFilePDF, sendVoice, sendVideo } = require('../actions/response');
 var client_global;
 
 const start = (client) => {
@@ -77,11 +77,23 @@ const postSendVoice = async( req, res ) => {
   })
 }
 
+const postSendVideo = async( req, res ) => {
+
+  const { from, file } = req.body;
+  
+  sendVideo(client_global, from, file);
+  return res.status(200).json({
+    status: "ok",
+    msg: "mensaje enviado"
+  })
+}
+
 module.exports = {
   postReceiveMessage,
   postSendMessage,
   postSendImage,
   postSendFilePDF,
   postSendVoice,
+  postSendVideo,
   start
 }

@@ -122,10 +122,10 @@ const sendVoice = async (client, from, file) => {
 }
 
 // Send video file MP4
-const sendVideo = async (client, message) => {
+const sendVideo = async (client, from, file) => {
   await client
-  .sendVideoAsGif(message.from,
-  'files/mp4/interpol-video.mp4',
+  .sendVideoAsGif(from,
+  file,
   'video.mp4',
   'mp4 file'
   )
