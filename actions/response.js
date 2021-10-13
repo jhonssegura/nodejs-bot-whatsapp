@@ -14,8 +14,6 @@ const sendText = async (client, from, text='desde el bot') => {
     });    
 }
 
-
-
 // send Image
 const sendImage = async (client, from, image)  => {
   if (image == "") {
@@ -85,7 +83,7 @@ const sendFilePDF = async (client, from, file) => {
     });
 }
 
-// send contact - Por Revisar
+// send contact 
 const sendContact = async (client, from, number, name) => {
   await client
   .sendContactVcard(from, number, name)
@@ -124,14 +122,10 @@ const sendVoice = async (client, from, file) => {
   });
 }
 
-// Send video file MP4
-const sendVideo = async (client, from, file) => {
+// Automatically sends a link with the auto generated link preview. You can also add a custom message to be added.
+const sendVideo = async (client, from, link, text) => {
   await client
-  .sendVideoAsGif(from,
-  file,
-  'video.mp4',
-  'mp4 file'
-  )
+  .sendLinkPreview(from, link, text)
   .then((result) => {
     console.log('Result: ', result); //return object success
   })

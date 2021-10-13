@@ -80,9 +80,9 @@ const postSendVoice = async( req, res ) => {
 
 const postSendVideo = async( req, res ) => {
 
-  const { from, file } = req.body;
+  const { from, link, text } = req.body;
   
-  sendVideo(client_global, from, file);
+  sendVideo(client_global, from, link, text);
   return res.status(200).json({
     status: "ok",
     msg: "mensaje enviado"
