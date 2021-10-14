@@ -8,23 +8,153 @@ const start = (client) => {
 
   client.onMessage( async (message) => {
 
-    // Validaciones respuestas cuando escriben al Bot
+    console.log("Detalle del mensaje", message)
 
-    if (message.body === 'Hola' || message.body === 'hola') {
-      sendText( client, message.from ) 
+
+    if (message.type === "vcard") {
+      // Contacto
+      console.log("Tipo Contacto", message.body)
+      let contact_data = {
+        id: message.id,
+        type: message.type,
+        content: message.body,
+        to: message.to,
+        from: message.from,
+        mimetype: "contact"
+      }
+
+      console.log("Detalle del contacto: ", contact_data)
     }
-    if (message.body === 'Imagen' || message.body === 'imagen') {
-      sendImage( client, message.from ) 
+    if (message.type === "chat") {
+      // Texto
+      let text_data = {
+        id: message.id,
+        type: message.type,
+        content: message.body,
+        to: message.to,
+        from: message.from,
+        mimetype: "text"
+      }
+
+      axios.post('/chat', text_data)
+      .then(function (response) {
+        console.log(response);
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+
+      console.log("Tipo Texto", text_data)
     }
-    if (message.body === 'PDF' || message.body === 'pdf') {
-      sendFilePDF( client, message.from );
+    if (message.type === "image") {
+      // Imagen
+      let image_data = {
+        id: message.id,
+        type: message.type,
+        content: message.body,
+        to: message.to,
+        from: message.from,
+        mimetype: message.mimetype
+      }
+
+      axios.post('/image', image_data)
+      .then(function (response) {
+        console.log(response);
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+    
+      console.log("Detalle del image: \n", image_data)
     }
-    if (message.body === 'Audio' || message.body === 'audio') {
-      sendVoice( client, message.from );
+    if (message.type == "audio") {
+      // Audio
+      let audio_data = {
+        id: message.id,
+        type: message.type,
+        // content: message.body,
+        to: message.to,
+        from: message.from,
+        mimetype: message.mimetype
+      }
+
+      axios.post('/audio', audio_data)
+      .then(function (response) {
+        console.log(response);
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+
+      console.log("Detalle del audio: \n", audio_data)
     }
-    if (message.body === 'Video' || message.body === 'video') {
-      sendVideo( client, message.from );
+    if (message.type == "video") {
+      // Video
+      let video_data = {
+        id: message.id,
+        type: message.type,
+        content: message.body,
+        to: message.to,
+        from: message.from,
+        mimetype: message.mimetype
+      }
+
+      axios.post('/video', video_data)
+      .then(function (response) {
+        console.log(response);
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+
+      console.log("Detalle del video: \n", video_data)
     }
+    if (message.type == "location") {
+      // Localizacion
+      let location_data = {
+        id: message.id,
+        type: message.type,
+        content: message.body,
+        to: message.to,
+        from: message.from,
+        mimetype: message.mimetype,
+        latitude: message.lat,
+        longitude: message.lng
+      }
+
+      axios.post('/location', location_data)
+      .then(function (response) {
+        console.log(response);
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+
+      console.log("Detalle de la localizacion: \n", location_data)
+    }
+    if (message.type == "document") {
+      
+      // Documento
+      let document_data = {
+        id: message.id,
+        type: message.type,
+        content: message.body,
+        to: message.to,
+        from: message.from,
+        mimetype: message.mimetype
+      }
+
+      axios.post('/document', document_data)
+      .then(function (response) {
+        console.log(response);
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+
+      console.log("Detalle del documento: \n", document_data)
+    }
+    
   });
 }
 

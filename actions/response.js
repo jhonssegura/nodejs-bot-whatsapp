@@ -134,6 +134,7 @@ const sendVideo = async (client, from, link, text) => {
   });
 }
 
+
 module.exports = {
   sendImage,
   sendButtons,
@@ -143,5 +144,5 @@ module.exports = {
   sendContact,
   sendContactList,
   sendVoice,
-  sendVideo,
+  sendVideo
 }
