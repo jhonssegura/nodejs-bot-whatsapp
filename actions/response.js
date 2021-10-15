@@ -17,7 +17,7 @@ const sendText = async (client, from, text='desde el bot') => {
 // send Image
 const sendImage = async (client, from, image)  => {
   if (image == "") {
-    image = "images/response.jpg"
+    image = "files/images/response.jpg"
   }
   await client
     .sendImage(

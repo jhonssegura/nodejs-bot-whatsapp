@@ -1,4 +1,7 @@
 const axios = require('axios');
+const fs = require('fs');
+const path = require('path');
+const mime = require('mime-types');
 const { sendImage, sendText, sendFilePDF, sendVoice, sendVideo, sendLocation, sendContact, sendContactList } = require('../actions/response');
 var client_global;
 
@@ -9,6 +12,18 @@ const start = (client) => {
   client.onMessage( async (message) => {
 
     console.log("Detalle del mensaje", message)
+
+    // MEDIA FILES
+    if (message.isMedia === true || message.isMMS === true) {
+      let baseDir = path.join(__dirname, '../uploads/');
+      const buffer = await client.decryptFile(message);
+      // At this point you can do whatever you want with the buffer
+      // Most likely you want to write it into a file
+      const fileName = `some-file-name.${mime.extension(message.mimetype)}`;
+      await fs.writeFile(baseDir,fileName, buffer, (err) => {
+       console.log("media file done!!!")
+      });
+    }
 
 
     if (message.type === "vcard") {
@@ -22,6 +37,14 @@ const start = (client) => {
         from: message.from,
         mimetype: "contact"
       }
+
+      axios.post('/vcard', contact_data)
+      .then(function (response) {
+        console.log(response);
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
 
       console.log("Detalle del contacto: ", contact_data)
     }
@@ -47,6 +70,49 @@ const start = (client) => {
       console.log("Tipo Texto", text_data)
     }
     if (message.type === "image") {
+      // var ReadableData = require('stream').Readable
+      // const imageBufferData = Buffer.from(message.body, 'base64');
+      // var streamObj = new ReadableData()
+      // streamObj.push(imageBufferData)
+      // streamObj.push(null)
+      // streamObj.pipe(fs.createWriteStream('testImage.jpg'));
+      // streamObj.pipe(fs.createWriteStream('uploads','testImage.jpg'));
+
+      // fs.writeFile('image.png', message.body, {encoding: 'base64'}, function(err) {
+      //   console.log('File created');
+      // });
+
+      // const fileContents = new Buffer(message.body, 'base64')
+      // fs.writeFile('./uploads', fileContents, (err) => {
+      //   if (err) return console.error(err)
+      //   console.log('file saved to ')
+      // })
+
+      // buffer image data to convert richh START FILE
+      // var data =  message.body;
+
+      // function decodeBase64Image(dataString) {
+      //   var matches = dataString.match(/^data:([A-Za-z-+\/]+);base64,(.+)$/),
+      //     response = {};
+
+      //   if (matches.length !== 3) {
+      //     return new Error('Invalid input string');
+      //   }
+
+      //   response.type = matches[1];
+      //   response.data = new Buffer(matches[2], 'base64');
+
+      //   return response;
+      // }
+
+      // var imageBuffer = decodeBase64Image(data);
+      // console.log("image buffer",imageBuffer);
+      // fs.writeFile('test.jpg', imageBuffer.data, function(err) {
+      //   console.log(err);
+      //  });
+
+
+      // buffer image data to convert richh END FILE
       // Imagen
       let image_data = {
         id: message.id,
