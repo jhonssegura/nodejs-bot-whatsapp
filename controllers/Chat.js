@@ -319,6 +319,23 @@ const postSendContactList = async( req, res ) => {
   })
 }
 
+// get Image
+const getPublicFile = async(req, res) => {
+  const file = req.params.document;
+  console.log("imagen q llega")
+
+  const pathImg = path.join( __dirname, `../uploads/${ file }` );
+  
+  // imagen por defecto
+  if ( fs.existsSync( pathImg ) ) {
+  res.sendFile( pathImg );
+  } else {
+      const pathImg = path.join( __dirname, `../uploads/no-img.png` );
+      res.sendFile( pathImg );
+  }
+
+}
+
 module.exports = {
   postReceiveMessage,
   postSendMessage,
@@ -329,5 +346,6 @@ module.exports = {
   postSendLocation,
   postSendContact,
   postSendContactList,
-  start
+  getPublicFile,
+  start,
 }
