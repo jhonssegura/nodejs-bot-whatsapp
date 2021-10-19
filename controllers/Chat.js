@@ -4,7 +4,7 @@ const path = require('path');
 const mime = require('mime-types');
 const { v4: uuidv4 } = require('uuid');
 const { sendImage, sendText, sendFilePDF, sendVoice, sendVideo, sendLocation, sendContact, sendContactList } = require('../actions/response');
-var client_global;
+var client_global, file_general;
 
 const start = (client) => {
   
@@ -18,6 +18,7 @@ const start = (client) => {
     if (message.isMedia === true || message.isMMS === true || message.type === 'ptt' || message.type === 'document' || message.type === 'sticker') {
       const buffer = await client.decryptFile(message);
       const fileName = `./uploads/${ uuidv4() }.${mime.extension(message.mimetype)}`;
+      file_general = fileName.split("/")[2] 
       fs.writeFileSync(fileName, buffer);
       
     }
@@ -27,7 +28,7 @@ const start = (client) => {
       let contact_data = {
         id: message.id,
         type: message.type,
-        content: message.body,
+        content: file_general,
         to: message.to,
         from: message.from,
         mimetype: "contact"
@@ -48,7 +49,7 @@ const start = (client) => {
       let text_data = {
         id: message.id,
         type: message.type,
-        content: message.body,
+        content: file_general,
         to: message.to,
         from: message.from,
         mimetype: "text"
@@ -66,10 +67,11 @@ const start = (client) => {
     }
     if (message.type === "image") {
       // Imagen
+      console.log("Imagen generada", file_general)
       let image_data = {
         id: message.id,
         type: message.type,
-        content: message.body,
+        content: file_general,
         to: message.to,
         from: message.from,
         mimetype: message.mimetype
@@ -84,13 +86,14 @@ const start = (client) => {
       });
     
       console.log("Detalle del image: \n", image_data)
+
     }
     if (message.type == "audio") {
       // Audio
       let audio_data = {
         id: message.id,
         type: message.type,
-        // content: message.body,
+        content: file_general,
         to: message.to,
         from: message.from,
         mimetype: message.mimetype
@@ -111,7 +114,7 @@ const start = (client) => {
       let video_data = {
         id: message.id,
         type: message.type,
-        content: message.body,
+        content: file_general,
         to: message.to,
         from: message.from,
         mimetype: message.mimetype
@@ -132,7 +135,7 @@ const start = (client) => {
       let location_data = {
         id: message.id,
         type: message.type,
-        content: message.body,
+        content: file_general,
         to: message.to,
         from: message.from,
         mimetype: message.mimetype,
@@ -155,7 +158,7 @@ const start = (client) => {
       let document_data = {
         id: message.id,
         type: message.type,
-        content: message.body,
+        content: file_general,
         to: message.to,
         from: message.from,
         mimetype: message.mimetype
