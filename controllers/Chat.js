@@ -14,17 +14,13 @@ const start = (client) => {
 
     console.log("Detalle del mensaje", message)
 
-    // MEDIA FILES
-    if (message.isMedia === true || message.isMMS === true) {
-      // let baseDir = path.join(__dirname, '/controllers/../uploads/');
+    // Download of file in Base64 to the original form
+    if (message.isMedia === true || message.isMMS === true || message.type === 'ptt' || message.type === 'document' || message.type === 'sticker') {
       const buffer = await client.decryptFile(message);
       const fileName = `./uploads/${ uuidv4() }.${mime.extension(message.mimetype)}`;
-      // const saveFile = await client.decryptFileSave('./uploads/',message, fileName)
       fs.writeFileSync(fileName, buffer);
       
     }
-
-
     if (message.type === "vcard") {
       // Contacto
       console.log("Tipo Contacto", message.body)
@@ -69,51 +65,6 @@ const start = (client) => {
       console.log("Tipo Texto", text_data)
     }
     if (message.type === "image") {
-      // var ReadableData = require('stream').Readable
-      // const imageBufferData = Buffer.from(message.body, 'base64');
-      // var streamObj = new ReadableData()
-      //streamObj.push(imageBufferData)
-      //streamObj.push(null)
-      //streamObj.pipe(fs.createWriteStream('testImage.jpg'));
-      // streamObj.pipe(fs.createWriteStream('uploads','testImage.jpg'));
-
-      fs.writeFile('uploads/image.png', message.body, {encoding: 'base64'}, function(err) {
-        console.log('File created');
-      });
-
-      // const fileContents = new Buffer(message.body, 'base64')
-      // fs.writeFile('./uploads', fileContents, (err) => {
-      //  if (err) return console.error(err)
-      //    console.log('file saved to ')
-      // })
-
-      // buffer image data to convert richh START FILE
-      // var data =  message.body;
-      /* 
-      function decodeBase64Image(dataString) {
-        var matches = dataString.match(/^data:([A-Za-z-+\/]+);base64,(.+)$/),
-         response = {};
-
-        if (matches.length !== 3) {
-          return new Error('Invalid input string');
-        }
-
-        response.type = matches[1];
-        response.data = new Buffer(matches[2], 'base64');
-
-        return response;
-      }
-      */
-
-
-      //var imageBuffer = decodeBase64Image(data);
-      // console.log("image buffer",imageBuffer);
-      // fs.writeFile('test.jpg', imageBuffer.data, function(err) {
-      //  console.log(err);
-      // });
-
-
-      // buffer image data to convert richh END FILE
       // Imagen
       let image_data = {
         id: message.id,
@@ -200,7 +151,6 @@ const start = (client) => {
       console.log("Detalle de la localizacion: \n", location_data)
     }
     if (message.type == "document") {
-      
       // Documento
       let document_data = {
         id: message.id,
