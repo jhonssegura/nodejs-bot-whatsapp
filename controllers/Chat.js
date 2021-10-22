@@ -161,7 +161,8 @@ const start = (client) => {
         content: file_general,
         to: message.to,
         from: message.from,
-        mimetype: message.mimetype
+        mimetype: message.mimetype,
+        filename: message.filename
       }
 
       axios.post('/document', document_data)
