@@ -244,9 +244,9 @@ const postSendText = async( req, res ) => {
 
   const { from, text } = req.body;
 
-  from += from+'@c.us'
+  let from_correct = from+'@c.us'
 
-  sendText(client_global, from, text);
+  sendText(client_global, from_correct, text);
   return res.status(200).json({
     status: "ok",
     msg: "mensaje enviado"
