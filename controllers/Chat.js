@@ -51,7 +51,7 @@ const start = (client) => {
       let text_data = {
         id: message.id,
         type: message.type,
-        content: file_general,
+        content: message.body,
         to: message.to,
         from: message.from,
         client: message.sender.pushname,
