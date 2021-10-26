@@ -4,6 +4,7 @@ const path = require('path');
 const mime = require('mime-types');
 const { v4: uuidv4 } = require('uuid');
 const { sendImage, sendText, sendFilePDF, sendVoice, sendVideo, sendLocation, sendContact, sendContactList } = require('../actions/response');
+const { json } = require('express');
 var client_global, file_general;
 
 const start = (client) => {
@@ -31,6 +32,7 @@ const start = (client) => {
         content: file_general,
         to: message.to,
         from: message.from,
+        client: message.sender.pushname,
         mimetype: "contact"
       }
 
@@ -52,6 +54,7 @@ const start = (client) => {
         content: file_general,
         to: message.to,
         from: message.from,
+        client: message.sender.pushname,
         mimetype: "text"
       }
 
@@ -74,6 +77,7 @@ const start = (client) => {
         content: file_general,
         to: message.to,
         from: message.from,
+        client: message.sender.pushname, 
         mimetype: message.mimetype
       }
 
@@ -96,6 +100,7 @@ const start = (client) => {
         content: file_general,
         to: message.to,
         from: message.from,
+        client: message.sender.pushname,
         mimetype: message.mimetype
       }
 
@@ -117,6 +122,7 @@ const start = (client) => {
         content: file_general,
         to: message.to,
         from: message.from,
+        client: message.sender.pushname,
         mimetype: message.mimetype
       }
 
@@ -138,6 +144,7 @@ const start = (client) => {
         content: file_general,
         to: message.to,
         from: message.from,
+        client: message.sender.pushname,
         mimetype: message.mimetype,
         latitude: message.lat,
         longitude: message.lng
@@ -161,6 +168,7 @@ const start = (client) => {
         content: file_general,
         to: message.to,
         from: message.from,
+        client: message.sender.pushname,
         mimetype: message.mimetype,
         filename: message.filename
       }
@@ -188,8 +196,48 @@ const postReceiveMessage = async( req, res ) => {
 const postSendMessage = async( req, res ) => {
 
   const { from, text } = req.body;
+  console.log(req.body)
+
+  const arreglo = req.body
+
+  const generado = JSON.stringify(arreglo)
+
+  JSON.parse(generado, (key, value) => {
+    console.log("Entró en la funcion")
+    if (key === 'text' ) {
+      console.log("Entro a la opcion de texto")
+    }
+    if (key === 'image') {
+      console.log("Entró a la opcion de imagen")
+      postSendImage(req, res)
+    }
+    if (key === 'number') {
+      console.log("Entró a la opcion de contacto")
+      postSendContact(req, res)
+    }
+    if (key === 'number_1') {
+      console.log("Entró a la opcion de lista de contactos")
+      postSendContactList(req, res)
+    }
+    if (key === 'latitude') {
+      console.log("Entró a la opcion de ubicacion")
+      postSendLocation(req, res)
+    }
+    if (key === 'file') {
+      console.log("Entró a la opcion de archivo")
+      postSendFilePDF(req, res)
+    }
+    if (key === 'link') {
+      console.log("Entró a la opcion de video")
+      postSendVideo(req, res)
+    }
+  });
+
+  console.log(arreglo)
+  console.log(generado)
+
   
-  sendText(client_global, from, text);
+  // sendText(client_global, from, text);
   return res.status(200).json({
     status: "ok",
     msg: "mensaje enviado"
