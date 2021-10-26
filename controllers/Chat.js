@@ -247,10 +247,6 @@ const postSendText = async( req, res ) => {
   let to_correct = to+'@c.us'
 
   sendText(client_global, to_correct, text);
-  return res.status(200).json({
-    status: "ok",
-    msg: "mensaje enviado"
-  })
 }
 
 const postSendImage = async( req, res ) => {
