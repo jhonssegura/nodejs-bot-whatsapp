@@ -244,6 +244,8 @@ const postSendText = async( req, res ) => {
 
   const { from, text } = req.body;
 
+  from += from+'@c.us'
+
   sendText(client_global, from, text);
   return res.status(200).json({
     status: "ok",
