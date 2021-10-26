@@ -36,7 +36,7 @@ const start = (client) => {
         mimetype: "contact"
       }
 
-      axios.post('/vcard', contact_data)
+      axios.post('https://sales-back.keos.co/wapi/get_mo?provider=4&host=51921740370', contact_data)
       .then(function (response) {
         console.log(response);
       })
@@ -58,7 +58,7 @@ const start = (client) => {
         mimetype: "text"
       }
 
-      axios.post('/chat', text_data)
+      axios.post('https://sales-back.keos.co/wapi/get_mo?provider=4&host=51921740370', text_data)
       .then(function (response) {
         console.log(response);
       })
@@ -81,7 +81,7 @@ const start = (client) => {
         mimetype: message.mimetype
       }
 
-      axios.post('/image', image_data)
+      axios.post('https://sales-back.keos.co/wapi/get_mo?provider=4&host=51921740370', image_data)
       .then(function (response) {
         console.log(response);
       })
@@ -104,7 +104,7 @@ const start = (client) => {
         mimetype: message.mimetype
       }
 
-      axios.post('/audio', audio_data)
+      axios.post('https://sales-back.keos.co/wapi/get_mo?provider=4&host=51921740370', audio_data)
       .then(function (response) {
         console.log(response);
       })
@@ -126,7 +126,7 @@ const start = (client) => {
         mimetype: message.mimetype
       }
 
-      axios.post('/video', video_data)
+      axios.post('https://sales-back.keos.co/wapi/get_mo?provider=4&host=51921740370', video_data)
       .then(function (response) {
         console.log(response);
       })
@@ -150,7 +150,7 @@ const start = (client) => {
         longitude: message.lng
       }
 
-      axios.post('/location', location_data)
+      axios.post('https://sales-back.keos.co/wapi/get_mo?provider=4&host=51921740370', location_data)
       .then(function (response) {
         console.log(response);
       })
@@ -173,7 +173,7 @@ const start = (client) => {
         filename: message.filename
       }
 
-      axios.post('/document', document_data)
+      axios.post('https://sales-back.keos.co/wapi/get_mo?provider=4&host=51921740370', document_data)
       .then(function (response) {
         console.log(response);
       })
@@ -203,9 +203,10 @@ const postSendMessage = async( req, res ) => {
   const generado = JSON.stringify(arreglo)
 
   JSON.parse(generado, (key, value) => {
-    console.log("Entró en la funcion")
+  
     if (key === 'text' ) {
       console.log("Entro a la opcion de texto")
+      postSendText(req, res)
     }
     if (key === 'image') {
       console.log("Entró a la opcion de imagen")
@@ -232,12 +233,18 @@ const postSendMessage = async( req, res ) => {
       postSendVideo(req, res)
     }
   });
+ 
+  return res.status(200).json({
+    status: "ok",
+    msg: "mensaje enviado"
+  })
+}
 
-  console.log(arreglo)
-  console.log(generado)
+const postSendText = async( req, res ) => {
 
-  
-  // sendText(client_global, from, text);
+  const { from, text } = req.body;
+
+  sendText(client_global, from, text);
   return res.status(200).json({
     status: "ok",
     msg: "mensaje enviado"
@@ -341,6 +348,7 @@ const getPublicFile = async(req, res) => {
 module.exports = {
   postReceiveMessage,
   postSendMessage,
+  postSendText,
   postSendImage,
   postSendFilePDF,
   postSendVoice,
