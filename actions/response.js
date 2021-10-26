@@ -1,10 +1,10 @@
 // send text
-const sendText = async (client, from, text='desde el bot') => {
+const sendText = async (client, to, text='desde el bot') => {
   console.log('enviando client', client);
-  console.log('enviando mensaje', from);
+  console.log('enviando mensaje', to);
   
   await client
-    .sendText(from, `👋 Bienvenido! ${text} `)
+    .sendText(to, text)
     .then((result) => {
       console.log('Result: ', result); //return object success
     })
