@@ -199,6 +199,7 @@ const postSendMessage = async( req, res ) => {
 
   const arreglo = req.body
   const generado = JSON.stringify(arreglo)
+  console.log("Este es el arreglo de datos", arreglo)
   if (arreglo.content_type === 'text') {
     console.log("Entro a la opcion de texto")
     postSendText(req, res)
