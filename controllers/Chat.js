@@ -216,10 +216,6 @@ const postSendMessage = async( req, res ) => {
     console.log("Entró a la opcion de video")
     postSendVideo(req, res)
   }
-  else if (arreglo.type.includes('video')) {
-    console.log("Entró a la opcion de video")
-    postSendVideo(req, res)
-  }
   else if (arreglo.type.includes('document') || arreglo.type.includes('application')) {
     console.log("Entró a la opcion de documento")
     postSendFilePDF(req, res)
@@ -266,30 +262,30 @@ const postSendText = async( req, res ) => {
 
 const postSendImage = async( req, res ) => {
 
-  const { from, image } = req.body
+  const { from, url } = req.body
 
-  sendImage(client_global, from, image);
+  sendImage(client_global, from, url);
 }
 
 const postSendFilePDF = async( req, res ) => {
 
-  const { from, file } = req.body;
+  const { from, url } = req.body;
   
-  sendFilePDF(client_global, from, file);
+  sendFilePDF(client_global, from, url);
 }
 
 const postSendVoice = async( req, res ) => {
 
-  const { from, file } = req.body;
+  const { from, url } = req.body;
   
-  sendVoice(client_global, from, file);
+  sendVoice(client_global, from, url);
 }
 
 const postSendVideo = async( req, res ) => {
 
-  const { from, link, text } = req.body;
+  const { from, url, text } = req.body;
   
-  sendVideo(client_global, from, link, text);
+  sendVideo(client_global, from, url, text);
 }
 
 const postSendLocation = async( req, res ) => {
