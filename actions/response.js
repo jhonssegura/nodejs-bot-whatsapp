@@ -15,13 +15,13 @@ const sendText = async (client, to, text='desde el bot') => {
 }
 
 // send Image
-const sendImage = async (client, from, image)  => {
+const sendImage = async (client, to, image)  => {
   if (image == "") {
     image = "files/images/response.jpg"
   }
   await client
     .sendImage(
-      from,
+      to,
       image,
       'image-name',
       'Caption text'
@@ -72,9 +72,9 @@ const sendLocation = async (client, from, latitude, longitude, country) => {
 }
 
 // send file PDF
-const sendFilePDF = async (client, from, file) => {
+const sendFilePDF = async (client, to, file) => {
   await client
-    .sendFile(from, file, 'peru.pdf', 'Himno')
+    .sendFile(to, file, 'peru.pdf', 'Himno')
     .then((result) => {
       console.log('Result: ', result); //return object success
     })
@@ -111,9 +111,9 @@ const sendContactList = async (client, from, number_1, number_2 ) => {
 }
 
 // Send audio file MP3
-const sendVoice = async (client, from, file) => {
+const sendVoice = async (client, to, file) => {
   await client
-  .sendVoice(from, file)
+  .sendVoice(to, file)
   .then((result) => {
     console.log('Result: ', result); //return object success
   })
@@ -123,9 +123,9 @@ const sendVoice = async (client, from, file) => {
 }
 
 // Automatically sends a link with the auto generated link preview. You can also add a custom message to be added.
-const sendVideo = async (client, from, link, text) => {
+const sendVideo = async (client, to, link, text) => {
   await client
-  .sendLinkPreview(from, link, text)
+  .sendLinkPreview(to, link, text)
   .then((result) => {
     console.log('Result: ', result); //return object success
   })

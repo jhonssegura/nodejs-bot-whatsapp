@@ -262,30 +262,38 @@ const postSendText = async( req, res ) => {
 
 const postSendImage = async( req, res ) => {
 
-  const { from, url } = req.body
+  const { to, url } = req.body
 
-  sendImage(client_global, from, url);
+  let to_correct = to+'@c.us'
+
+  sendImage(client_global, to_correct, url);
 }
 
 const postSendFilePDF = async( req, res ) => {
 
-  const { from, url } = req.body;
+  const { to, url } = req.body;
+
+  let to_correct = to+'@c.us'
   
-  sendFilePDF(client_global, from, url);
+  sendFilePDF(client_global, to_correct, url);
 }
 
 const postSendVoice = async( req, res ) => {
 
-  const { from, url } = req.body;
+  const { to, url } = req.body;
+
+  let to_correct = to+'@c.us'
   
-  sendVoice(client_global, from, url);
+  sendVoice(client_global, to_correct, url);
 }
 
 const postSendVideo = async( req, res ) => {
 
-  const { from, url, text } = req.body;
+  const { to, url, text } = req.body;
+
+  let to_correct = to+'@c.us'
   
-  sendVideo(client_global, from, url, text);
+  sendVideo(client_global, to_correct, url, text);
 }
 
 const postSendLocation = async( req, res ) => {
