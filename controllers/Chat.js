@@ -199,17 +199,33 @@ const postSendMessage = async( req, res ) => {
 
   const arreglo = req.body
   const generado = JSON.stringify(arreglo)
-
+  if (arreglo.content_type === 'text') {
+    console.log("Entro a la opcion de texto")
+    postSendText(req, res)
+  }
+  else if (arreglo.content_type.includes('image')) {
+    console.log("Entró a la opcion de imagen")
+    postSendImage(req, res)
+  }
+  else if (arreglo.content_type.includes('audio')) {
+    console.log("Entró a la opcion de voice")
+    postSendVoice(req, res)
+  }
+  else if (arreglo.content_type.includes('video')) {
+    console.log("Entró a la opcion de video")
+    postSendVideo(req, res)
+  }
+  else if (arreglo.content_type.includes('video')) {
+    console.log("Entró a la opcion de video")
+    postSendVideo(req, res)
+  }
+  else if (arreglo.content_type.includes('document') || arreglo.content_type.includes('application')) {
+    console.log("Entró a la opcion de documento")
+    postSendFilePDF(req, res)
+  }
+  /*
   JSON.parse(generado, (key, value) => {
-  
-    if (key === 'text' ) {
-      console.log("Entro a la opcion de texto")
-      postSendText(req, res)
-    }
-    if (key === 'image') {
-      console.log("Entró a la opcion de imagen")
-      postSendImage(req, res)
-    }
+
     if (key === 'number') {
       console.log("Entró a la opcion de contacto")
       postSendContact(req, res)
@@ -231,7 +247,7 @@ const postSendMessage = async( req, res ) => {
       postSendVideo(req, res)
     }
   });
- 
+  */
   return res.status(200).json({
     status: "ok",
     msg: "mensaje enviado"
