@@ -18,7 +18,9 @@ const start = (client) => {
     // Download of file in Base64 to the original form
     if (message.isMedia === true || message.isMMS === true || message.type === 'ptt' || message.type === 'document' || message.type === 'sticker') {
       const buffer = await client.decryptFile(message);
+      
       const fileName = `./uploads/${ uuidv4() }.${mime.extension(message.mimetype)}`;
+      console.log("Este es el filename a revisar",fileName)
       file_general = fileName.split("/")[2] 
       fs.writeFileSync(fileName, buffer);
       
@@ -92,7 +94,7 @@ const start = (client) => {
       console.log("Detalle del image: \n", image_data)
 
     }
-    if (message.type == "audio") {
+    if (message.type == "audio" || message.type === "ptt") {
       // Audio
       let audio_data = {
         id: message.id,
