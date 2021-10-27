@@ -195,11 +195,7 @@ const postReceiveMessage = async( req, res ) => {
 
 const postSendMessage = async( req, res ) => {
 
-  const { from, text } = req.body;
-  console.log(req.body)
-
   const arreglo = req.body
-
   const generado = JSON.stringify(arreglo)
 
   JSON.parse(generado, (key, value) => {
@@ -254,10 +250,6 @@ const postSendImage = async( req, res ) => {
   const { from, image } = req.body
 
   sendImage(client_global, from, image);
-  return res.status(200).json({
-    status: "ok",
-    msg: "imagen enviada"
-  })
 }
 
 const postSendFilePDF = async( req, res ) => {
@@ -265,10 +257,6 @@ const postSendFilePDF = async( req, res ) => {
   const { from, file } = req.body;
   
   sendFilePDF(client_global, from, file);
-  return res.status(200).json({
-    status: "ok",
-    msg: "mensaje enviado"
-  })
 }
 
 const postSendVoice = async( req, res ) => {
@@ -276,10 +264,6 @@ const postSendVoice = async( req, res ) => {
   const { from, file } = req.body;
   
   sendVoice(client_global, from, file);
-  return res.status(200).json({
-    status: "ok",
-    msg: "mensaje enviado"
-  })
 }
 
 const postSendVideo = async( req, res ) => {
@@ -287,10 +271,6 @@ const postSendVideo = async( req, res ) => {
   const { from, link, text } = req.body;
   
   sendVideo(client_global, from, link, text);
-  return res.status(200).json({
-    status: "ok",
-    msg: "mensaje enviado"
-  })
 }
 
 const postSendLocation = async( req, res ) => {
@@ -298,10 +278,6 @@ const postSendLocation = async( req, res ) => {
   const { from, latitude, longitude, country } = req.body;
   
   sendLocation(client_global, from, latitude, longitude, country);
-  return res.status(200).json({
-    status: "ok",
-    msg: "mensaje enviado"
-  })
 }
 
 const postSendContact = async( req, res ) => {
@@ -309,10 +285,6 @@ const postSendContact = async( req, res ) => {
   const { from, number, name } = req.body;
   
   sendContact(client_global, from, number, name);
-  return res.status(200).json({
-    status: "ok",
-    msg: "mensaje enviado"
-  })
 }
 
 const postSendContactList = async( req, res ) => {
@@ -320,10 +292,6 @@ const postSendContactList = async( req, res ) => {
   const { from, number_1, number_2 } = req.body;
   
   sendContactList(client_global, from, number_1, number_2);
-  return res.status(200).json({
-    status: "ok",
-    msg: "mensaje enviado"
-  })
 }
 
 // get Image
