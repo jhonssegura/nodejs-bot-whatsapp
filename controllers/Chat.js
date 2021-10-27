@@ -200,27 +200,27 @@ const postSendMessage = async( req, res ) => {
   const arreglo = req.body
   const generado = JSON.stringify(arreglo)
   console.log("Este es el arreglo de datos", arreglo)
-  if (arreglo.content_type === 'text') {
+  if (arreglo.type === 'text') {
     console.log("Entro a la opcion de texto")
     postSendText(req, res)
   }
-  else if (arreglo.content_type.includes('image')) {
+  else if (arreglo.type.includes('image')) {
     console.log("Entró a la opcion de imagen")
     postSendImage(req, res)
   }
-  else if (arreglo.content_type.includes('audio')) {
+  else if (arreglo.type.includes('audio')) {
     console.log("Entró a la opcion de voice")
     postSendVoice(req, res)
   }
-  else if (arreglo.content_type.includes('video')) {
+  else if (arreglo.type.includes('video')) {
     console.log("Entró a la opcion de video")
     postSendVideo(req, res)
   }
-  else if (arreglo.content_type.includes('video')) {
+  else if (arreglo.type.includes('video')) {
     console.log("Entró a la opcion de video")
     postSendVideo(req, res)
   }
-  else if (arreglo.content_type.includes('document') || arreglo.content_type.includes('application')) {
+  else if (arreglo.type.includes('document') || arreglo.type.includes('application')) {
     console.log("Entró a la opcion de documento")
     postSendFilePDF(req, res)
   }
