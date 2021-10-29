@@ -199,8 +199,10 @@ const postSendMessage = async( req, res ) => {
 
   const arreglo = req.body
   const generado = JSON.stringify(arreglo)
+  console.log("Cliente global", client_global)
+  // console.log("File General", file_general)
   console.log("Este es el arreglo de datos", arreglo)
-  if (arreglo.type === 'text') {
+  if (arreglo.type === 'text' || arreglo.type === 'chat') {
     console.log("Entro a la opcion de texto")
     postSendText(req, res)
   }
@@ -254,7 +256,8 @@ const postSendMessage = async( req, res ) => {
 const postSendText = async( req, res ) => {
 
   const { to, text } = req.body;
-
+  console.log("Está en esta parte, a punto d eneviar")
+  console.log("El numero que llega", client_global)
   let to_correct = to+'@c.us'
 
   sendText(client_global, to_correct, text);
