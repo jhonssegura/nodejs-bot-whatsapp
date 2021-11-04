@@ -25,13 +25,33 @@ const start = (client) => {
       fs.writeFileSync(fileName, buffer);
       
     }
+    // Opción cuando es tipo contacto
     if (message.type === "vcard") {
-      // Contacto
-      console.log("Tipo Contacto", message.body)
+
+      // Extrae la data para el nombre del contacto enviado
+      let cadena = message.body;
+      let indice = cadena.indexOf("FN");
+      let extraido = cadena.substring(indice)
+      let ret1 = extraido.replace('FN', '')
+      let ret2 = ret1.replace('END:VCARD', '')
+      let ret3 = ret2.replace('TEL;type=CELL;waid=', '') 
+      let ret4 = ret3.replace('item1.X-ABLabel:Mobile', '')
+      let ret5 = ret4.replace(/[^a-zA-Z ]/g, '')
+
+      // Extrae la data para el numero del contacto enviado
+      let cadena2 = message.body;
+      let indice2 = cadena2.indexOf("+");
+      let extraido2 = cadena2.substring(indice2)
+      let ret6 = extraido2.replace('END:VCARD', '')
+      let ret7 = ret6.replace(/[^0-9\.]+/g, "")
+
+      // Combinación de los datos obtenidos del contacto enviado
+      let result_contact = (ret5+ret7)
+
       let contact_data = {
         id: message.id,
         type: message.type,
-        content: file_general,
+        content: result_contact,
         to: message.to,
         from: message.from,
         client: message.sender.pushname,
@@ -48,8 +68,9 @@ const start = (client) => {
 
       console.log("Detalle del contacto: ", contact_data)
     }
+    // Opción cuando es tipo texto
     if (message.type === "chat") {
-      // Texto
+ 
       let text_data = {
         id: message.id,
         type: message.type,
@@ -70,9 +91,9 @@ const start = (client) => {
 
       console.log("Tipo Texto", text_data)
     }
+    // Opción cuando es tipo imagen
     if (message.type === "image") {
-      // Imagen
-      console.log("Imagen generada", file_general)
+
       let image_data = {
         id: message.id,
         type: message.type,
@@ -94,8 +115,9 @@ const start = (client) => {
       console.log("Detalle del image: \n", image_data)
 
     }
+    // Opcion cuando es tipo audio
     if (message.type == "audio" || message.type === "ptt") {
-      // Audio
+
       let audio_data = {
         id: message.id,
         type: message.type,
@@ -116,8 +138,9 @@ const start = (client) => {
 
       console.log("Detalle del audio: \n", audio_data)
     }
+    // Opcion cuando es tipo video
     if (message.type == "video") {
-      // Video
+
       let video_data = {
         id: message.id,
         type: message.type,
@@ -138,8 +161,9 @@ const start = (client) => {
 
       console.log("Detalle del video: \n", video_data)
     }
+    // Opcion cuando es tipo ubicacion
     if (message.type == "location") {
-      // Localizacion
+
       let location_data = {
         id: message.id,
         type: message.type,
@@ -162,8 +186,9 @@ const start = (client) => {
 
       console.log("Detalle de la localizacion: \n", location_data)
     }
+    // Opcion cuando es tipo documento
     if (message.type == "document") {
-      // Documento
+
       let document_data = {
         id: message.id,
         type: message.type,
