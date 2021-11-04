@@ -46,7 +46,9 @@ const start = (client) => {
       let ret7 = ret6.replace(/[^0-9\.]+/g, "")
 
       // Combinación de los datos obtenidos del contacto enviado
-      let result_contact = (ret5+ret7)
+      
+      let result_contact = {"Name":ret5, "Number":ret7}
+      console.log("Ahora en JSON: ", result_contact)
 
       let contact_data = {
         id: message.id,
