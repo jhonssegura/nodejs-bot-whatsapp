@@ -43,7 +43,7 @@ const start = (client) => {
       let indice2 = cadena2.indexOf("+");
       let extraido2 = cadena2.substring(indice2)
       let ret6 = extraido2.replace('END:VCARD', '')
-      let ret7 = ret6.replace(/[^0-9\.]+/g, "")
+      let ret7 = ret6.replace(/[^0-9\.]+/g, '')
 
       // Combinación de los datos obtenidos del contacto enviado
       
