@@ -5,9 +5,7 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node index",
-    "dev": "nodemon index.js",
-    "prod": "forever start index.js"
+    "start": "node index"
   },
   "keywords": [],
   "author": "Richard Montesdeoca, Jhonathan Salas",

@@ -72,26 +72,32 @@ const start = (client) => {
     }
     // Opción cuando es tipo texto
     if (message.type === "chat") {
- 
-      let text_data = {
-        id: message.id,
-        type: message.type,
-        content: message.body,
-        to: message.to,
-        from: message.from,
-        client: message.sender.pushname,
-        mimetype: "text"
+      if (message.sender.pushname == undefined) {
+        console.log("Entro cuando es indefinidio")
+        let text_data = {
+          id: message.id,
+          type: message.type,
+          content: message.body,
+          to: message.to,
+          from: message.from,
+          client: message.sender.verifiedName,
+          mimetype: "text"
+        }
       }
+      else if (message.sender.verifiedName == undefined) {
+        console.log("Entro cuando es numero normal")
+        let text_data = {
+          id: message.id,
+          type: message.type,
+          content: message.body,
+          to: message.to,
+          from: message.from,
+          client: message.sender.pushname,
+          mimetype: "text"
+        }
+      }
+      axios.post('https://sales-back.keos.co/wapi/get_mo?provider=4&host=51921740370', text_data) 
 
-      axios.post('https://sales-back.keos.co/wapi/get_mo?provider=4&host=51921740370', text_data)
-      .then(function (response) {
-        console.log(response);
-      })
-      .catch(function (error) {
-        console.log(error);
-      });
-
-      console.log("Tipo Texto", text_data)
     }
     // Opción cuando es tipo imagen
     if (message.type === "image") {
@@ -283,8 +289,7 @@ const postSendMessage = async( req, res ) => {
 const postSendText = async( req, res ) => {
 
   const { to, text } = req.body;
-  console.log("Está en esta parte, a punto d eneviar")
-  console.log("El numero que llega", client_global)
+
   let to_correct = to+'@c.us'
 
   sendText(client_global, to_correct, text);
@@ -296,7 +301,7 @@ const postSendImage = async( req, res ) => {
 
   let to_correct = to+'@c.us'
 
-  sendImage(client_global, to_correct, url);
+  (client_global, to_correct, url);
 }
 
 const postSendFilePDF = async( req, res ) => {
