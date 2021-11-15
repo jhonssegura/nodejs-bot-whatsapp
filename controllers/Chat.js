@@ -72,9 +72,10 @@ const start = (client) => {
     }
     // Opción cuando es tipo texto
     if (message.type === "chat") {
+      let text_data = {}
       if (message.sender.pushname == undefined) {
         console.log("Entro cuando es indefinidio")
-        let text_data = {
+        text_data = {
           id: message.id,
           type: message.type,
           content: message.body,
@@ -86,7 +87,7 @@ const start = (client) => {
       }
       else if (message.sender.verifiedName == undefined) {
         console.log("Entro cuando es numero normal")
-        let text_data = {
+        text_data = {
           id: message.id,
           type: message.type,
           content: message.body,
@@ -96,8 +97,16 @@ const start = (client) => {
           mimetype: "text"
         }
       }
-      axios.post('https://sales-back.keos.co/wapi/get_mo?provider=4&host=51921740370', text_data) 
+       
+      axios.post('https://sales-back.keos.co/wapi/get_mo?provider=4&host=51921740370', text_data)
+      .then(function (response) {
+        console.log(response);
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
 
+      console.log("Detalle del texto: \n", text_data)
     }
     // Opción cuando es tipo imagen
     if (message.type === "image") {
