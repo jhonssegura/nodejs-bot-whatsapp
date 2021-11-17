@@ -72,7 +72,7 @@ const sendLocation = async (client, from, latitude, longitude, country) => {
 }
 
 // send file PDF
-const sendFilePDF = async (client, to, file) => {
+const sendFile = async (client, to, file) => {
   await client
     .sendFile(to, file, 'peru.pdf', 'Himno')
     .then((result) => {
@@ -140,7 +140,7 @@ module.exports = {
   sendButtons,
   sendText,
   sendLocation,
-  sendFilePDF,
+  sendFile,
   sendContact,
   sendContactList,
   sendVoice,

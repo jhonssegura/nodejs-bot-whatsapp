@@ -3,7 +3,7 @@ const fs = require('fs');
 const path = require('path');
 const mime = require('mime-types');
 const { v4: uuidv4 } = require('uuid');
-const { sendImage, sendText, sendFilePDF, sendVoice, sendVideo, sendLocation, sendContact, sendContactList } = require('../actions/response');
+const { sendImage, sendText, sendFile, sendVoice, sendVideo, sendLocation, sendContact, sendContactList } = require('../actions/response');
 const { json } = require('express');
 var client_global, file_general;
 
@@ -262,7 +262,7 @@ const postSendMessage = async( req, res ) => {
   }
   else if (arreglo.type.includes('document') || arreglo.type.includes('application')) {
     console.log("Entró a la opcion de documento")
-    postSendFilePDF(req, res)
+    postSendFile(req, res)
   }
   /*
   JSON.parse(generado, (key, value) => {
@@ -281,7 +281,7 @@ const postSendMessage = async( req, res ) => {
     }
     if (key === 'file') {
       console.log("Entró a la opcion de archivo")
-      postSendFilePDF(req, res)
+      postSendFile(req, res)
     }
     if (key === 'link') {
       console.log("Entró a la opcion de video")
@@ -313,13 +313,13 @@ const postSendImage = async( req, res ) => {
   (client_global, to_correct, url);
 }
 
-const postSendFilePDF = async( req, res ) => {
+const postSendFile = async( req, res ) => {
 
   const { to, url } = req.body;
 
   let to_correct = to+'@c.us'
   
-  sendFilePDF(client_global, to_correct, url);
+  sendFile(client_global, to_correct, url);
 }
 
 const postSendVoice = async( req, res ) => {
@@ -378,17 +378,34 @@ const getPublicFile = async(req, res) => {
 
 }
 
+// Get Qr Code
+const getQrFile = async(req, res) => {
+  const file = req.params.document;
+  console.log("Imagen que llega del Qr.")
+
+  const pathImg = path.join( __dirname, `../qrcode/out.png` );
+  // imagen por defecto
+  if ( fs.existsSync( pathImg ) ) {
+    res.sendFile( pathImg );
+    } else {
+        const pathImg = path.join( __dirname, `../uploads/no-img.png` );
+        res.sendFile( pathImg );
+    }
+}
+
+
 module.exports = {
   postReceiveMessage,
   postSendMessage,
   postSendText,
   postSendImage,
-  postSendFilePDF,
+  postSendFile,
   postSendVoice,
   postSendVideo,
   postSendLocation,
   postSendContact,
   postSendContactList,
   getPublicFile,
+  getQrFile,
   start,
 }

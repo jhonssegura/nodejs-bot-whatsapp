@@ -1,4 +1,4 @@
-# nodejs-bot-whatsapp
+# Bot Venom
 
 Ejecutar el proyecto
 
@@ -8,16 +8,10 @@ Ejecutar el proyecto
 
 ## Comandos para Ejecución
 
-Para el ambiente de Pruebas
-
-    $ npm run dev
-
-Para el ambiente de Producción 
-
-    $ npm run prod
-
 Ejecutar instrucción para monitoreo
 
-    $ pm2 install pm2-server-monit --watch
+    $ pm2 start index.js
 
+Revisar Log.
 
+    $ pm2 log
