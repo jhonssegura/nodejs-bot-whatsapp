@@ -1,3 +1,4 @@
+const { connected } = require('process');
 const venom = require('venom-bot');
 // const { start } = require('../actions/start');
 const { start } = require('../controllers/Chat');
@@ -35,6 +36,25 @@ const sessions = async () => {
   undefined,
   { logQR: false }
   )
+
+  console.log("Venom se conecta", venom.create)
+  console.log("Esto es de Keos", marketingClient)
+  console.log("Detalle de Keos session", marketingClient.spinStatus.previousStatus)
+  console.log("Detalle de Keos session", marketingClient.spinStatus.previousText)
+
+  if (marketingClient.spinStatus.previousText == "Connected") {
+    console.log("Hola, estás en lo correcto")
+
+    const fs = require('fs')
+
+    try {
+      fs.unlinkSync("./qrcode/out.png")
+      console.log("File removed")
+    } catch(err) {
+      console.error("Something wrong happened removing the file", err)
+    }
+
+  }
   
   start(marketingClient);
   
